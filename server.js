@@ -200,7 +200,7 @@ async function evaluateTextWithGPT4(correctedText, criterio) {
 }
 
 // Servir el frontend (carpeta pública estática)
-app.use(express.static('public'));
+app.use(express.static('/'));
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
