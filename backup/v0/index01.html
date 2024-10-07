@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluador IA</title>
+</head>
+<body>
+    <h1>Subir una imagen de texto</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required />
+        <input type="text" name="criterio" placeholder="Criterio de evaluación" required />
+        <button type="submit">Subir</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('image', document.querySelector('input[type="file"]').files[0]);
+            formData.append('criterio', document.querySelector('input[name="criterio"]').value);
+    
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            });
+    
+            const result = await response.json();
+            document.getElementById('result').innerText = 
+                `Texto extraído: ${result.text}\nTexto corregido: ${result.correctedText}\nEvaluación: ${result.evaluation}\nJustificación: ${result.justification}`;
+        });
+    </script>
